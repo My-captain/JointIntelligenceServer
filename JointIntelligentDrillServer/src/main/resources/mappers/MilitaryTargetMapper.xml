@@ -1,0 +1,71 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zliu.elliot.JointIntelligentDrillServer.dao.MilitaryTargetDao">
+
+    <resultMap id="MilitaryTargetMap" type="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryTarget">
+        <id column="uuid" property="uuid" jdbcType="VARCHAR"/>
+        <result column="target_name" property="targetName" jdbcType="VARCHAR"/>
+        <result column="properties" property="properties" jdbcType="VARCHAR"/>
+        <result column="batch" property="batch" jdbcType="VARCHAR"/>
+        <association property="militaryProperty" javaType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryProperty">
+            <id column="property_id" property="uuid" jdbcType="VARCHAR"/>
+            <result column="type_zh" property="typeZh" jdbcType="VARCHAR"/>
+            <result column="type_en" property="typeEn" jdbcType="VARCHAR"/>
+            <result column="category" property="category" jdbcType="INTEGER"/>
+            <result column="max_speed" property="maxSpeed" jdbcType="INTEGER"/>
+            <result column="attack_radius" property="attackRadius" jdbcType="INTEGER"/>
+            <result column="detection_radius" property="detectionRadius" jdbcType="INTEGER"/>
+        </association>
+        <collection property="targetTraces" ofType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryTrace">
+            <id column="trace_id" property="uuid" jdbcType="VARCHAR"/>
+            <result column="longitude" property="longitude" jdbcType="DECIMAL"/>
+            <result column="latitude" property="latitude" jdbcType="DECIMAL"/>
+            <result column="altitude" property="altitude" jdbcType="DECIMAL"/>
+            <result column="appearance_time" property="appearanceTime" jdbcType="TIMESTAMP"/>
+        </collection>
+    </resultMap>
+
+    <insert id="saveTarget" parameterType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryTarget">
+        insert into military_target values(
+            #{uuid},
+            #{targetName},
+            #{properties},
+            #{batch}
+        )
+    </insert>
+
+    <delete id="deleteTarget">
+        delete from military_target where uuid=#{uuid}
+    </delete>
+
+    <update id="modifyTarget">
+        update military_target set
+        target_name=#{targetName},
+        properties=#{properties},
+        batch=#{batch}
+        where uuid=#{uuid}
+    </update>
+
+    <select id="getAllTargets" resultMap="MilitaryTargetMap">
+        select mtarget.uuid,
+               mtarget.target_name,
+               mtarget.properties,
+               mtarget.batch,
+               mproperty.uuid property_id,
+               mproperty.type_zh,
+               mproperty.type_en,
+               mproperty.category,
+               mproperty.max_speed,
+               mproperty.attack_radius,
+               mproperty.detection_radius,
+               mtrace.uuid trace_id,
+               mtrace.target,
+               mtrace.longitude,
+               mtrace.latitude,
+               mtrace.altitude,
+               mtrace.appearance_time
+        from military_target mtarget
+        right join military_trace mtrace on mtarget.uuid=mtrace.target
+        left join military_property mproperty on mtarget.properties=mproperty.uuid
+    </select>
+
+</mapper>

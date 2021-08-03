@@ -1,0 +1,42 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zliu.elliot.JointIntelligentDrillServer.dao.MilitaryPropertyDao">
+
+    <select id="getAllProperty" resultType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryProperty">
+        select uuid,
+               type_zh typeZh,
+               type_en typeEn,
+               category category,
+               max_speed maxSpeed,
+               attack_radius attackRadius,
+               detection_radius detectionRadius
+        from military_property
+    </select>
+
+    <insert id="saveProperty" parameterType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryProperty">
+        insert into military_property values(
+            #{uuid},
+            #{typeZh},
+            #{typeEn},
+            #{category},
+            #{maxSpeed},
+            #{attackRadius},
+            #{detectionRadius}
+        )
+    </insert>
+
+    <delete id="deleteProperty">
+        delete from military_property where uuid=#{uuid}
+    </delete>
+
+    <update id="modifyProperty" parameterType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryProperty">
+        update military_property set
+        type_zh=#{typeZh},
+        type_en=#{typeEn},
+        category=#{category},
+        max_speed=#{maxSpeed},
+        attack_radius=#{attackRadius},
+        detection_radius=#{detectionRadius}
+        where uuid=#{uuid}
+    </update>
+
+</mapper>

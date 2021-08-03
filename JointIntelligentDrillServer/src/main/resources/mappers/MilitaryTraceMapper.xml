@@ -1,0 +1,33 @@
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="zliu.elliot.JointIntelligentDrillServer.dao.MilitaryTraceDao">
+
+    <insert id="saveTrace" parameterType="zliu.elliot.JointIntelligentDrillServer.entity.MilitaryTrace">
+        insert into military_trace values(
+            #{uuid},
+            #{target},
+            #{longitude},
+            #{latitude},
+            #{altitude},
+            #{appearanceTime}
+        )
+    </insert>
+
+    <delete id="deleteTrace">
+        delete from military_trace where uuid=#{uuid}
+    </delete>
+
+    <delete id="deleteTraceByTarget">
+        delete from military_trace where target=#{targetId}
+    </delete>
+
+    <update id="modifyTrace">
+        update military_trace set
+        target=#{target},
+        longitude=#{longitude},
+        latitude=#{latitude},
+        altitude=#{altitude},
+        appearance_time=#{appearanceTime}
+        where uuid=#{uuid}
+    </update>
+
+</mapper>
