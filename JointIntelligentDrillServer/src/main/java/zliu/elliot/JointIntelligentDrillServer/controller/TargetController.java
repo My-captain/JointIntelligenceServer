@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("client")
+@RequestMapping(value = "client", produces = "application/json;charset=UTF-8")
 public class TargetController {
 
     @Autowired

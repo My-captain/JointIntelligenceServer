@@ -15,12 +15,13 @@ import zliu.elliot.JointIntelligentDrillServer.service.MilitaryTargetService;
 import zliu.elliot.JointIntelligentDrillServer.service.MilitaryTraceService;
 import zliu.elliot.JointIntelligentDrillServer.utils.ResponseBase;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("admin")
+@RequestMapping(value = "admin", produces = "application/json;charset=UTF-8")
 public class AdminController {
 
     @Autowired
@@ -31,6 +32,14 @@ public class AdminController {
 
     @Autowired
     private MilitaryTraceService militaryTraceService;
+
+    @RequestMapping("get_info")
+    public String getUserInfo() {
+        List<String> userInfo = new ArrayList<>();
+        userInfo.add("super_admin");
+        userInfo.add("admin");
+        return JSON.toJSONString(userInfo);
+    }
 
     @RequestMapping("getAllTarget")
     public String getAllTarget() {

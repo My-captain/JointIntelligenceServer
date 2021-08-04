@@ -1,15 +1,25 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: echo
     url: jdbc:mysql://127.0.0.1:3306/jids?characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false
+    username: root
+    password: Fuhao123.
+  web:
+    resources:
+      static-locations: classpath:static/
+
+#    username: root
+#    password: echo
 server:
   port: 9000
+  servlet:
+    context-path: /
 
 logging:
   level:
     zliu.elliot.JointIntelligentDrillServer.dao: debug
 mybatis:
   mapper-locations: classpath:/mappers/*.xml
+
+
 

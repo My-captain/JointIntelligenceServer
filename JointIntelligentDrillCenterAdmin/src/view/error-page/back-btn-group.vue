@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Button size="large" type="text" @click="backHome">返回首页</Button>
+    <Button size="large" type="text" @click="backHome">前往首页</Button>
     <Button size="large" type="text" @click="backPrev">返回上一页({{ second }}s)</Button>
   </div>
 </template>
@@ -11,7 +11,7 @@ export default {
   name: 'backBtnGroup',
   data () {
     return {
-      second: 5,
+      second: 10,
       timer: null
     }
   },
@@ -24,6 +24,9 @@ export default {
     backPrev () {
       this.$router.go(-1)
     }
+  },
+  created () {
+    this.backHome()
   },
   mounted () {
     this.timer = setInterval(() => {
